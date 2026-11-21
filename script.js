@@ -1,5 +1,6 @@
 const filterButtons = document.querySelectorAll('.task-filters button');
 const taskForm = document.querySelector('.task-form');
+const submitButton = taskForm.querySelector('button[type="submit"]');
 const titleInput = document.querySelector('#task-title');
 const taskList = document.querySelector('.task-list');
 const taskCount = document.querySelector('#task-count');
@@ -26,6 +27,7 @@ for (const button of filterButtons) {
 
 taskForm.addEventListener('submit', (event) => {
   event.preventDefault();
+  if (submitButton.disabled) return;
 
   const title = titleInput.value.trim();
   if (!title) {
@@ -34,14 +36,23 @@ taskForm.addEventListener('submit', (event) => {
     return;
   }
 
-  const task = document.createElement('li');
-  task.textContent = title;
-  task.dataset.status = 'pendente';
-  applyTaskFilter(task);
-  taskList.append(task);
+  titleInput.readOnly = true;
+  submitButton.disabled = true;
+  submitButton.setAttribute('aria-busy', 'true');
 
-  const total = taskList.children.length;
-  taskCount.textContent = total === 1 ? '1 tarefa' : total + ' tarefas';
-  taskForm.reset();
-  titleInput.focus();
+  setTimeout(() => {
+    const task = document.createElement('li');
+    task.textContent = title;
+    task.dataset.status = 'pendente';
+    applyTaskFilter(task);
+    taskList.append(task);
+
+    const total = taskList.children.length;
+    taskCount.textContent = total === 1 ? '1 tarefa' : total + ' tarefas';
+    taskForm.reset();
+    titleInput.readOnly = false;
+    submitButton.disabled = false;
+    submitButton.removeAttribute('aria-busy');
+    titleInput.focus();
+  }, 400);
 });
