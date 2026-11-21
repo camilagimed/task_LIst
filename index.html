@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lista de tarefas</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
   <header class="page-header">
@@ -14,14 +15,20 @@
   </header>
 
   <main class="container">
+    <form class="task-form">
+      <label for="task-title">Título da tarefa</label>
+      <input id="task-title" name="title" type="text" required>
+      <button type="submit">Adicionar</button>
+    </form>
+
     <ul class="task-list">
-      <li>Revisar o material da aula</li>
-      <li>Organizar os arquivos do projeto</li>
+      <li data-status="pendente">Revisar o material da aula</li>
+      <li data-status="concluida">Organizar os arquivos do projeto</li>
     </ul>
   </main>
 
   <footer class="page-footer">
-    <div class="container">2 tarefas</div>
+    <div class="container" id="task-count" aria-live="polite">2 tarefas</div>
   </footer>
 </body>
 </html>
