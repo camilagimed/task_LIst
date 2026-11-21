@@ -1,16 +1,24 @@
-const filterButtons = document.querySelectorAll('.task-filters button');
-const tasks = document.querySelectorAll('.task-list li');
+const taskForm = document.querySelector('.task-form');
+const titleInput = document.querySelector('#task-title');
+const taskList = document.querySelector('.task-list');
+const taskCount = document.querySelector('#task-count');
 
-for (const button of filterButtons) {
-  button.addEventListener('click', () => {
-    const filter = button.dataset.filter;
+taskForm.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-    for (const filterButton of filterButtons) {
-      filterButton.setAttribute('aria-pressed', String(filterButton === button));
-    }
+  const title = titleInput.value.trim();
+  if (!title) {
+    titleInput.value = '';
+    titleInput.reportValidity();
+    return;
+  }
 
-    for (const task of tasks) {
-      task.hidden = filter !== 'todas' && task.dataset.status !== filter;
-    }
-  });
-}
+  const task = document.createElement('li');
+  task.textContent = title;
+  taskList.append(task);
+
+  const total = taskList.children.length;
+  taskCount.textContent = total === 1 ? '1 tarefa' : total + ' tarefas';
+  taskForm.reset();
+  titleInput.focus();
+});
