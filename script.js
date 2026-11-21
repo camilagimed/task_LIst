@@ -5,6 +5,21 @@ const titleInput = document.querySelector('#task-title');
 const taskList = document.querySelector('.task-list');
 const taskCount = document.querySelector('#task-count');
 
+const themeToggle = document.querySelector('#theme-toggle');
+
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  themeToggle.textContent = theme === 'dark' ? 'Modo claro' : 'Modo escuro';
+}
+
+setTheme(localStorage.getItem('theme') === 'dark' ? 'dark' : 'light');
+
+themeToggle.addEventListener('click', () => {
+  const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  setTheme(theme);
+  localStorage.setItem('theme', theme);
+});
+
 const storageKey = 'tasks';
 const tasks = JSON.parse(localStorage.getItem(storageKey)) ?? [];
 
