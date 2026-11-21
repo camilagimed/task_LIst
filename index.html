@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lista de tarefas</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
   <header class="page-header">
@@ -14,9 +15,15 @@
   </header>
 
   <main class="container">
+    <div class="task-filters" role="group" aria-label="Filtrar tarefas por status">
+      <button type="button" data-filter="todas" aria-pressed="true">Todas</button>
+      <button type="button" data-filter="pendente" aria-pressed="false">Pendentes</button>
+      <button type="button" data-filter="concluida" aria-pressed="false">Concluídas</button>
+    </div>
+
     <ul class="task-list">
-      <li>Revisar o material da aula</li>
-      <li>Organizar os arquivos do projeto</li>
+      <li data-status="pendente">Revisar o material da aula</li>
+      <li data-status="concluida">Organizar os arquivos do projeto</li>
     </ul>
   </main>
 
